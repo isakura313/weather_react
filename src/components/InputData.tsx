@@ -1,12 +1,13 @@
-import {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 import {Button, OutlinedInput, Container} from "@mui/material";
 import WeatherStoreInfo from "../store/WeatherStateInfo";
+import Stack from '@mui/material/Stack';
 
 
 function InputData() {
     const [cityInfo, updateCityInfo] = useState('')
 
-    function updateInfo(e) {
+    function updateInfo(e: React.ChangeEvent<HTMLInputElement>) {
         updateCityInfo(e.target.value)
     }
 
@@ -14,16 +15,18 @@ function InputData() {
         WeatherStoreInfo.setCity(cityInfo)
     }
 
-    function keyDown(e) {
-        if (e.key === 'enter') {
+    function keyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (e.key === 'Enter') {
             getInfo()
         }
     }
 
     return (
         <Container maxWidth="sm">
-            <OutlinedInput color="primary" onChange={updateInfo} onKeyDown={keyDown}/>
-            <Button variant='outlined' onClick={getInfo}>Search</Button>
+            <Stack spacing={2} direction="row"   justifyContent="center">
+                <OutlinedInput color="primary" onChange={updateInfo} onKeyDown={keyDown} size="small"/>
+                <Button variant='contained' onClick={getInfo}>Search</Button>
+            </Stack>
         </Container>
 
     )
