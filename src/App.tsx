@@ -19,23 +19,27 @@ const App = observer(() => {
     const [weather, setWeather] = useState(null)
 
     const getData = async () => {
-        const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${WeatherStateInfo.city}&units=metric&appid=fa55c9b48bf19b93b69b0f2b81fdf56c`);
-        setWeather(data);
+        if (WeatherStateInfo.city !== '') {
+            const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${WeatherStateInfo.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
+            setWeather(data);
+        }
+
     };
     useEffect(() => {
         getData()
     }, [WeatherStateInfo.city])
 
     return (
-        <Grid container direction="row" justifyContent="center" alignItems="center" columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        <Grid container direction="row" justifyContent="center" alignItems="center"
+              columnSpacing={{xs: 1, sm: 2, md: 3}}
               rowSpacing={2}>
-            <Grid item xs={12} >
+            <Grid item xs={12}>
                 <Item>
                     <InputData/>
                 </Item>
             </Grid>
             <Grid xs={6} item>
-                <WeatherInfo weatherData={weather}/>
+                <WeatherInfo weatherData={weather} city={WeatherStateInfo.city}/>
             </Grid>
         </Grid>
     )

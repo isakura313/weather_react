@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, Key} from 'react'
 import WeatherStoreInfo from "../store/WeatherStateInfo";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,6 +21,11 @@ interface weatherType {
     sea_level: Number,
 }
 
+interface RowInterface {
+    name: Key,
+    data: String
+}
+
 function createData(
     name: string,
     data: string,
@@ -37,6 +42,7 @@ const Item = styled(Paper)(({theme}) => ({
     color: theme.palette.text.secondary,
 }));
 
+
 const WeatherInfo = (props: any) => {
     const [weatherInfo, updateWeatherInfo] = useState<weatherType | null>(null)
     let rows: any = [];
@@ -51,29 +57,37 @@ const WeatherInfo = (props: any) => {
         ]
     }
     return (
-        <Item>
-            {props.weatherData !== null &&
-                <TableContainer>
-                    <Table size="small" aria-label="Weather table">
-                        <TableBody>
-                            {rows.map((row) => (
-                                <TableRow
-                                    key={row.name}
-                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                >
-                                    <TableCell component="th" scope="row">
-                                        {row.name}
-                                    </TableCell>
-                                    <TableCell align="right">{row.data}</TableCell>
-
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-
+        <div>
+            {props.weatherData == null &&
+                <h2> Choose city, where you wanna know weather</h2>
             }
-        </Item>
+
+            {props.weatherData !== null &&
+                <div>
+                    <h2> Weather in {props.city} </h2>
+                    <Item>
+                        <TableContainer>
+                            <Table size="small" aria-label="Weather table">
+                                <TableBody>
+                                    {rows.map((row: RowInterface) => (
+                                        <TableRow
+                                            key={row.name}
+                                            sx={{'&:last-child td, &:last-child th': {border: 0}}}
+                                        >
+                                            <TableCell component="th" scope="row">
+                                                {row.name}
+                                            </TableCell>
+                                            <TableCell align="right">{row.data}</TableCell>
+
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </Item>
+                </div>
+            }
+        </div>
     )
 
 
