@@ -1,16 +1,14 @@
-import {useState, useEffect, Key} from 'react'
-import WeatherStoreInfo from "../store/WeatherStateInfo";
+import {useState, Key} from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid'
 import {styled} from '@mui/material/styles';
-
+import Loader from "./Loader";
+import Typography from '@mui/material/Typography';
+import TimeInfo from "./TimeInfo";
 
 interface weatherType {
     main: String,
@@ -58,13 +56,20 @@ const WeatherInfo = (props: any) => {
     }
     return (
         <div>
-            {props.weatherData == null &&
-                <h2> Choose city, where you wanna know weather</h2>
+            {props.loaderState &&
+                <Loader/>
+            }
+            {props.weatherData == null && !props.loaderState  &&
+                <Typography variant="h5" gutterBottom mt={2} align="center">
+                    Choose city, where you wanna know weather
+                </Typography>
             }
 
-            {props.weatherData !== null &&
+            {props.weatherData !== null && props.loaderState === false &&
                 <div>
-                    <h2> Weather in {props.city} </h2>
+                    <Typography variant="h5" gutterBottom mt={2} align="center">
+                        Weather in {props.city}
+                    </Typography>
                     <Item>
                         <TableContainer>
                             <Table size="small" aria-label="Weather table">
@@ -85,6 +90,7 @@ const WeatherInfo = (props: any) => {
                             </Table>
                         </TableContainer>
                     </Item>
+                <TimeInfo/>
                 </div>
             }
         </div>

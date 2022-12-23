@@ -1,7 +1,7 @@
 import {useState, useEffect} from 'react'
+import axios from 'axios'
 import InputData from './components/InputData'
 import WeatherInfo from "./components/WeatherInfo";
-import axios from 'axios'
 import {observer} from 'mobx-react-lite';
 import WeatherStateInfo from "./store/WeatherStateInfo";
 import Grid from '@mui/material/Grid'
@@ -17,10 +17,14 @@ const Item = styled(Paper)(({theme}) => ({
 }));
 const App = observer(() => {
     const [weather, setWeather] = useState(null)
+    const [loaderState, setLoaderState] = useState(false);
 
     const getData = async () => {
         if (WeatherStateInfo.city !== '') {
+            setLoaderState(true)
             const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${WeatherStateInfo.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
+            console.log(data)
+            setLoaderState(false);
             setWeather(data);
         }
 
@@ -39,7 +43,7 @@ const App = observer(() => {
                 </Item>
             </Grid>
             <Grid xs={6} item>
-                <WeatherInfo weatherData={weather} city={WeatherStateInfo.city}/>
+                <WeatherInfo weatherData={weather} city={WeatherStateInfo.city} loaderState={loaderState}/>
             </Grid>
         </Grid>
     )
