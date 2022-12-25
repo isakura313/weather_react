@@ -59,7 +59,7 @@ const WeatherInfo = (props: any) => {
             {props.loaderState &&
                 <Loader/>
             }
-            {props.weatherData == null && !props.loaderState  &&
+            {props.weatherData == null && !props.loaderState &&
                 <Typography variant="h5" gutterBottom mt={2} align="center">
                     Choose city, where you wanna know weather
                 </Typography>
@@ -90,7 +90,7 @@ const WeatherInfo = (props: any) => {
                             </Table>
                         </TableContainer>
                     </Item>
-                <TimeInfo/>
+                    <TimeInfo weatherInfo={props.weatherData}/>
                 </div>
             }
         </div>
