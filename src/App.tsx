@@ -7,51 +7,32 @@ import InputData from './components/InputData'
 import WeatherInfo from "./components/WeatherInfo";
 import {observer} from 'mobx-react-lite';
 import WeatherStateInfo from "./store/WeatherStateInfo";
-import {Link} from 'react-router-dom'
 import Nav from "./components/Nav";
+import {Routes, Route, Outlet, Link} from "react-router-dom";
+import Home from './pages/Home';
+import SavedTimes from "./pages/SavedTimes";
+import SavedCity from "./pages/SavedCity";
 
-const Item = styled(Paper)(({theme}) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
+
 const App = observer(() => {
-    const [weather, setWeather] = useState(null)
-    const [loaderState, setLoaderState] = useState(false);
-
-    const getData = async () => {
-        if (WeatherStateInfo.city !== '') {
-            setLoaderState(true)
-            const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${WeatherStateInfo.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
-            console.log(data)
-            setLoaderState(false);
-            setWeather(data);
-        }
-
-    };
-    useEffect(() => {
-        getData()
-    }, [WeatherStateInfo.city])
 
     return (
-        <div>
-            <Nav/>
-            <Grid container direction="row" justifyContent="center" alignItems="center"
-                  columnSpacing={{xs: 1, sm: 2, md: 3}}
-                  rowSpacing={2}>
-                <Grid item xs={12}>
-                    <Item>
-                        <InputData/>
-                    </Item>
-                </Grid>
-                <Grid xs={6} item>
-                    <WeatherInfo weatherData={weather} city={WeatherStateInfo.city} loaderState={loaderState}/>
-                </Grid>
-            </Grid>
+        <div className="App">
+
+            <Routes>
+                <Route path="/" element={<Nav />}>
+                <Route index element={<Home/>}/>
+                    <Route path="savedCity" element={<SavedCity/>}/>
+                    <Route path="savedTimes" element={<SavedTimes/>}/>
+
+                    {/* Using path="*"" means "match anything", so this route
+                acts like a catch-all for URLs that we don't have explicit
+                routes for. */}
+                </Route>
+            </Routes>
         </div>
+
     )
 })
 
-export default App
+export default App;

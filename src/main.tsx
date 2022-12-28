@@ -1,31 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
+import Home from './App'
 import './index.css'
 import ErrorPage from "./ErrorPage";
+import SavedTimes from './pages/SavedTimes';
+import {BrowserRouter} from "react-router-dom";
+import App from './App'
 
 
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import SavedCity from './components/Saved'
+import SavedCity from './pages/SavedCity'
 
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App/>,
-        errorElement: <ErrorPage/>
-    },
-    {
-        path: "/saved",
-        element: "SavedCity"
-    }
-]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+      <BrowserRouter>
+          <App/>
+      </BrowserRouter>
   </React.StrictMode>,
 )
