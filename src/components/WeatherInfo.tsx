@@ -9,6 +9,7 @@ import {styled} from '@mui/material/styles';
 import Loader from "./Loader";
 import Typography from '@mui/material/Typography';
 import TimeInfo from "./TimeInfo";
+import WindInfo from "./WindInfo";
 
 interface weatherType {
     main: String,
@@ -40,8 +41,8 @@ const Item = styled(Paper)(({theme}) => ({
     color: theme.palette.text.secondary,
 }));
 
-
 const WeatherInfo = (props: any) => {
+
     const [weatherInfo, updateWeatherInfo] = useState<weatherType | null>(null)
     let rows: any = [];
     if (props.weatherData !== null) {
@@ -91,6 +92,7 @@ const WeatherInfo = (props: any) => {
                         </TableContainer>
                     </Item>
                     <TimeInfo weatherInfo={props.weatherData}/>
+                    <WindInfo wind={props.weatherData.wind}/>
                 </div>
             }
         </div>

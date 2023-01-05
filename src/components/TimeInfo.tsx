@@ -2,7 +2,6 @@ import {DateTime} from "luxon";
 import Typography from '@mui/material/Typography';
 
 
-
 function TimeTable(props: any) {
     const dt_sunrise = DateTime.fromSeconds(props.weatherInfo.sys.sunrise).setZone(`UTC+${props.weatherInfo.timezone / 3600}`);
 
@@ -19,7 +18,6 @@ function TimeTable(props: any) {
             </Typography>
             <Typography variant="h6" gutterBottom>
                 sunset at:
-
                 {dt_sunset.hour}:{dt_sunset.minute}
             </Typography>
         </div>

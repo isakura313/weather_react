@@ -26,7 +26,6 @@ const Home = observer(() => {
         if (WeatherStateInfo.city !== '') {
             setLoaderState(true)
             const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${WeatherStateInfo.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
-            console.log(data)
             setLoaderState(false);
             setWeather(data);
         }
@@ -43,7 +42,7 @@ const Home = observer(() => {
                   rowSpacing={2}>
                 <Grid item xs={12}>
                     <Item>
-                        <InputData/>
+                        <InputData mode="now"/>
                     </Item>
                 </Grid>
                 <Grid xs={6} item>
