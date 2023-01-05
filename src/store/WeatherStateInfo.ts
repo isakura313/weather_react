@@ -11,7 +11,7 @@ interface cityTime {
 class WeatherStoreInfo {
     city = '';
     citiesWeatherToRemember: string[] = []
-    citiesTimesToRememeber: cityTime[] = []
+    citiesTimesToRememeber: any[] = []
     weather = ''
 
     constructor() {

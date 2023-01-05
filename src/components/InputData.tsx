@@ -8,11 +8,13 @@ import axios from "axios";
 
 function InputData(props: any) {
     const [cityInfo, updateCityInfo] = useState('')
+    const [timeInfo, updateTimeInfo] = useState('')
     const [zoneInfo, updateZoneInfo] = useState(0)
     const [zoneCall, updateZoneCall] = useState(false);
 
     function updateInfo(e: React.ChangeEvent<HTMLInputElement>) {
-        updateCityInfo(e.target.value)
+     if (props.mode === 'savedTimes')
+            updateCityInfo(e.target.value)
     }
 
     async function getInfo() {
@@ -33,30 +35,24 @@ function InputData(props: any) {
         WeatherStoreInfo.setWeatherToRemember(cityInfo)
     }
 
-    async function savedTimes() {
-
-        updateZoneCall(true);
-        // if(zoneInfo) {
-
-
-        // }
-
+     function savedTimes() {
+         updateTimeInfo(cityInfo);
+         // WeatherStoreInfo.setTimesToRemember(cityInfo)
     }
 
     const getData = async () => {
         if (cityInfo !== '') {
             const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityInfo}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
-            alert(data.timezone)
             updateZoneInfo(data.timezone/60);
-            WeatherStoreInfo.setTimesToRemember({name: cityInfo, zone: zoneInfo});
-            alert(WeatherStoreInfo.citiesTimesToRememeber[0].name)
+            WeatherStoreInfo.setTimesToRemember({name: cityInfo, zone: data.timezone/3600});
+            // alert(WeatherStoreInfo.citiesTimesToRememeber[0].name)
             // updateZoneCall(false);
         }
 
     };
     useEffect(() => {
         getData()
-    }, [zoneCall])
+    }, [timeInfo])
 
 
     function keyDown(e: React.KeyboardEvent<HTMLInputElement>) {

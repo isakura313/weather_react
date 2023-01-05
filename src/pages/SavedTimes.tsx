@@ -16,8 +16,16 @@ const Item = styled(Paper)(({theme}) => ({
     color: theme.palette.text.secondary,
 }));
 
+
+const listItems = WeatherStateInfo.citiesTimesToRememeber.map((city, index) =>
+    <div key={+new Date()}>
+        <p>{city.name}</p>
+    </div>)
+
+
 const SavedTimes = observer(() => {
     return (
+
         <Grid container direction="row" justifyContent="center" alignItems="center"
               columnSpacing={{xs: 1, sm: 2, md: 3}}
               rowSpacing={2}>
@@ -26,13 +34,10 @@ const SavedTimes = observer(() => {
                     <InputData mode="savedTimes"/>
                 </Item>
             </Grid>
+            {listItems}
             <Grid xs={6} item>
-                {WeatherStateInfo.citiesTimesToRememeber.length &&
-                <div>{String(WeatherStateInfo.citiesTimesToRememeber[0].timezone)}</div>
-                }
-                {/*<div> {WeatherStateInfo.citiesTimesToRememeber[0].timezone}</div>*/}
-
-                {/*<WeatherInfo weatherData={weather} city={WeatherStateInfo.city} loaderState={loaderState}/>*/}
+                {listItems}
+                {JSON.stringify(WeatherStateInfo.citiesTimesToRememeber)}
             </Grid>
         </Grid>
     )
