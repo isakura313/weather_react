@@ -6,6 +6,7 @@ import WeatherStateInfo from "../store/WeatherStateInfo";
 import {styled} from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import {observer} from "mobx-react-lite";
+import Clock from '../components/Clock'
 
 
 const Item = styled(Paper)(({theme}) => ({
@@ -17,13 +18,13 @@ const Item = styled(Paper)(({theme}) => ({
 }));
 
 
-const listItems = WeatherStateInfo.citiesTimesToRememeber.map((city, index) =>
-    <div key={+new Date()}>
-        <p>{city.name}</p>
-    </div>)
-
-
 const SavedTimes = observer(() => {
+    const weatherCities = WeatherStateInfo.citiesTimesToRememeber.slice()
+    const listClock = weatherCities.map((city: any) => {
+        return (
+            <Clock key={city.name} city={city.name} timeZone={city.timezone}/>
+        )
+    })
     return (
 
         <Grid container direction="row" justifyContent="center" alignItems="center"
@@ -34,10 +35,9 @@ const SavedTimes = observer(() => {
                     <InputData mode="savedTimes"/>
                 </Item>
             </Grid>
-            {listItems}
+
+            {listClock}
             <Grid xs={6} item>
-                {listItems}
-                {JSON.stringify(WeatherStateInfo.citiesTimesToRememeber)}
             </Grid>
         </Grid>
     )

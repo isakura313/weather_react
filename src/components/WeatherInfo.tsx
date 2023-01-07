@@ -91,8 +91,12 @@ const WeatherInfo = (props: any) => {
                             </Table>
                         </TableContainer>
                     </Item>
+                    <Item>
                     <TimeInfo weatherInfo={props.weatherData}/>
+                    </Item>
+                    <Item>
                     <WindInfo wind={props.weatherData.wind}/>
+                    </Item>
                 </div>
             }
         </div>

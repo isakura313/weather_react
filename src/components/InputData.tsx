@@ -13,9 +13,10 @@ function InputData(props: any) {
     const [zoneCall, updateZoneCall] = useState(false);
 
     function updateInfo(e: React.ChangeEvent<HTMLInputElement>) {
-     if (props.mode === 'savedTimes')
+     // if (props.mode === 'savedTimes')
             updateCityInfo(e.target.value)
     }
+
 
     async function getInfo() {
         if (props.mode === 'now') {

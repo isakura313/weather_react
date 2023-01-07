@@ -29,7 +29,7 @@ const SavedTimes = observer(()=>{
             <Grid xs={6} item>
                 {/*<WeatherInfo weatherData={weather} city={WeatherStateInfo.city} loaderState={loaderState}/>*/}
             </Grid>
-            <h1>hello</h1>
+            <h1></h1>
             {WeatherStateInfo.citiesWeatherToRemember}
 
         </Grid>
