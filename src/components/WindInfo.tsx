@@ -23,7 +23,6 @@ function WindInfo(props: any) {
     const CAR_DIR: string[] = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
 
     function getDeg(deg: number): string {
-        console.log(deg / 25)
         return CAR_DIR[Math.floor(deg / 25.5)]
     }
 

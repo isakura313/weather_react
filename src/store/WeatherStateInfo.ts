@@ -1,18 +1,22 @@
 import {makeAutoObservable} from "mobx";
-import { makePersistable } from 'mobx-persist-store';
-
+import {makePersistable} from 'mobx-persist-store';
+import DeleteIcon from '@mui/icons-material/Delete';
+import {Key} from "react";
 
 
 interface cityTime {
+    id: Number | Key,
     name: String,
     timezone: Number
 }
-interface WeatherToRemeberInfo{
-    main:String,
+
+interface WeatherToRemeberInfo {
+    main: String,
     description: String,
     temp: String,
     feels_like: String;
 }
+
 class WeatherStoreInfo {
     city = '';
     citiesWeatherToRemember: string[] = []
@@ -23,7 +27,11 @@ class WeatherStoreInfo {
     constructor() {
         makeAutoObservable(this);
         // @ts-ignore
-        makePersistable(this, {name: 'weather', properties: ['citiesWeatherToRemember', 'citiesTimesToRememeber'], storage: window.localStorage})
+        makePersistable(this, {
+            name: 'weather',
+            properties: ['citiesWeatherToRemember', 'citiesTimesToRememeber'],
+            storage: window.localStorage
+        })
     }
 
 
@@ -32,16 +40,22 @@ class WeatherStoreInfo {
     }
 
     setWeatherToRemember(city: string) {
-        this.citiesWeatherToRemember.push(city.charAt(0).toUpperCase()+ city.slice(1))
+        this.citiesWeatherToRemember.push(city.charAt(0).toUpperCase() + city.slice(1))
         // я хочу записывать  не так часто, поэтому мне надо скешировать информацию
         this.citiesWeatherToRemember = [...new Set(this.citiesWeatherToRemember)];
     }
 
 
     setTimesToRemember(city: any) {
-        console.log(city.timezone);
-        this.citiesTimesToRememeber.push({name: city.name.charAt(0).toUpperCase()+ city.name.slice(1), timezone: city.zone})
-        console.log(this.citiesTimesToRememeber)
+        this.citiesTimesToRememeber.push({
+            id: +new Date(),
+            name: city.name.charAt(0).toUpperCase() + city.name.slice(1),
+            timezone: city.zone
+        })
+    }
+
+    deleteTimesToRemember(name: String) {
+        this.citiesTimesToRememeber = this.citiesTimesToRememeber.filter((cityItem:cityTime)=>cityItem.name != name)
     }
 }
 
