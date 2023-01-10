@@ -9,6 +9,11 @@ interface cityTime {
     name: String,
     timezone: Number
 }
+interface weatherToRememberInfo{
+    id: Number| Key,
+    created: Number,
+    weatherInfo: WeatherToRemeberInfo,
+}
 
 interface WeatherToRemeberInfo {
     main: String,

@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, forwardRef, ReactElement, Ref} from 'react'
 import axios from 'axios'
 import Grid from '@mui/material/Grid'
 import {styled} from "@mui/material/styles";
@@ -7,27 +7,54 @@ import InputData from '../components/InputData'
 import WeatherInfo from "../components/WeatherInfo";
 import {observer} from 'mobx-react-lite';
 import WeatherStateInfo from "../store/WeatherStateInfo";
-import {Link, Outlet} from 'react-router-dom'
-import Nav from '../components/Nav'
 
-const Item = styled(Paper)(({theme}) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
+import {TransitionProps} from '@mui/material/transitions';
+import GridItem from '../components/GridItem'
+import Button from '@mui/material/Button';
+import Typography from "@mui/material/Typography";
+
+const Transition = forwardRef(function Transition(
+    props: TransitionProps & {
+        children: ReactElement<any, any>;
+    },
+    ref: Ref<unknown>,
+) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
 
 const Home = observer(() => {
+    const [open, setOpen] = useState(false);
+
+
     const [weather, setWeather] = useState(null)
     const [loaderState, setLoaderState] = useState(false);
 
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
     const getData = async () => {
         if (WeatherStateInfo.city !== '') {
             setLoaderState(true)
-            const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${WeatherStateInfo.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
+            try {
+                const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${WeatherStateInfo.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
+                setWeather(data);
+            } catch (e) {
+                handleClickOpen()
+                setWeather(null)
+            }
             setLoaderState(false);
-            setWeather(data);
+
         }
 
     };
@@ -41,13 +68,30 @@ const Home = observer(() => {
                   columnSpacing={{xs: 1, sm: 2, md: 3}}
                   rowSpacing={2}>
                 <Grid item xs={12}>
-                    <Item>
+                    <GridItem>
                         <InputData mode="now"/>
-                    </Item>
+                    </GridItem>
                 </Grid>
                 <Grid xs={6} item>
                     <WeatherInfo weatherData={weather} city={WeatherStateInfo.city} loaderState={loaderState}/>
                 </Grid>
+                <Dialog
+                    open={open}
+                    TransitionComponent={Transition}
+                    keepMounted
+                    onClose={handleClose}
+                    aria-describedby="alert-dialog-slide-description"
+                >
+                    <DialogTitle>{"Error"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-slide-description">
+                            We can't find city <Typography variant="h5" component="h2" align="center"> {WeatherStateInfo.city}</Typography> Try something else
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Agree</Button>
+                    </DialogActions>
+                </Dialog>
             </Grid>
 
         </div>
