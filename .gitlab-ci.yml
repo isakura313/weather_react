@@ -6,8 +6,6 @@ pages:
       files:
         - package.json
       prefix: npm
-    paths:
-      - node_modules/
   script:
     - npm install pnpm -g
     - pnpm run build
