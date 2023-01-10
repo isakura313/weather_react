@@ -1,11 +1,17 @@
-image: node:latest
-pages:
+# .gitlab-ci.yml file to be placed in the root of your repository
+
+pages: # the job must be named pages
+  image: node:latest
   stage: deploy
+  variables:
+    # Replace this with your site URL
+    PUBLIC_URL: https://isakura313.gitlab.io/weather-app/
   script:
-    - npm install pnpm -g
-    - pnpm install
+    - npm i pnpm -g
     - pnpm run build
-    - cp -a dist/. public/
+    - mv dist public # rename the dist folder (result of npm run build)
   artifacts:
     paths:
-      - public
+      - public # artifact path must be /public for GitLab Pages to pick it up
+  only:
+    - main
