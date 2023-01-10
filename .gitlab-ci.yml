@@ -3,6 +3,7 @@ pages:
   stage: deploy
   script:
     - npm install pnpm -g
+    - pnpm install
     - pnpm run build
     - cp -a dist/. public/
   artifacts:
