@@ -7,6 +7,7 @@ pages:
     - npm install pnpm -g
     - pnpm install
     - pnpm run build
+    - rm -r public
     - cp -a dist/. public/
     - cp public/index.html public/404.html
   artifacts:
