@@ -8,6 +8,7 @@ pages: # the job must be named pages
     PUBLIC_URL: https://isakura313.gitlab.io/weather-app/
   script:
     - npm i pnpm -g
+    - pnpm install
     - pnpm run build
     - mv dist public # rename the dist folder (result of npm run build)
   artifacts:
