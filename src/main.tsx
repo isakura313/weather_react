@@ -18,7 +18,7 @@ import SavedCity from './pages/SavedCity'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-      <BrowserRouter>
+      <BrowserRouter basename={import.meta.env.PUBLIC_URL}>
           <App/>
       </BrowserRouter>
   </React.StrictMode>,
