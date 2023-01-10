@@ -1,11 +1,6 @@
 image: node:16.5.0
 pages:
   stage: deploy
-  cache:
-    key:
-      files:
-        - package.json
-      prefix: npm
   script:
     - npm install pnpm -g
     - pnpm run build
