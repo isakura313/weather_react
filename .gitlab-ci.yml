@@ -1,11 +1,16 @@
 image: node:latest
 pages:
   stage: deploy
+  variables:
+    PUBLIC_URL: https://isakura313.gitlab.io/weather-app/
   script:
     - npm install pnpm -g
     - pnpm install
     - pnpm run build
     - cp -a dist/. public/
+    - cp public/index.html public/404.html
   artifacts:
     paths:
       - public
+  only:
+    - main
