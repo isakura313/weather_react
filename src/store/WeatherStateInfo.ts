@@ -59,6 +59,7 @@ class WeatherStoreInfo {
         this.citiesWeatherInfoToRememberWhole.push({
             id: +new Date(),
             created: +new Date(),
+            city: city,
             weatherInfo: {
                 main: data.weather[0].main,
                 description: data.weather[0].description,
@@ -66,7 +67,6 @@ class WeatherStoreInfo {
                 feels_like: data.weather.feels_like
             }
         })
-
     }
 }
 

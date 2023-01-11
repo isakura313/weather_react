@@ -10,30 +10,45 @@ import Clock from "../components/Clock";
 import weatherToRememberInfoWhole from "../types/weatherToRememberInfoWhole";
 import WeatherToRemeber from "../components/WeatherToRemeber";
 
+
 const SavedTimes = observer(() => {
     const [loaderState, setLoaderState] = useState(false);
     const [weather, setWeather] = useState(null)
+
+    useEffect(() => {
+        checkUpdated();
+    }, []);
+
+    async function checkUpdated(){
+
+        // i don't wanna set more and more
+        WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((city)=>{
+            //  не допустить дублирования...
+
+        })
+    }
     const listWeather = WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((weather: weatherToRememberInfoWhole, index) => {
         return (
             <Grid item xs={4} md={4} key={index}>
-                <WeatherToRemeber weatherInfo={weather.weatherInfo}/>
+                <WeatherToRemeber weatherInfo={weather.weatherInfo} city={weather.city}/>
             </Grid>
         )
     })
     return (
-        <Grid container direction="row" justifyContent="center" alignItems="center"
-              columnSpacing={{xs: 1, sm: 2, md: 3}}
-              rowSpacing={2}>
-            <Grid item xs={12}>
-                <GridItem>
-                    <InputData mode="savedWeather"/>
-                </GridItem>
+        <div>
+            <Grid container direction="row" justifyContent="center" alignItems="center"
+                  columnSpacing={{xs: 1, sm: 2, md: 3}}
+                  rowSpacing={2}>
+                <Grid item xs={12}>
+                    <GridItem>
+                        <InputData mode="savedWeather"/>
+                    </GridItem>
+                </Grid>
             </Grid>
-            <Grid xs={6} item>
+            <Grid container spacing={2}>
                 {listWeather}
             </Grid>
-
-        </Grid>
+        </div>
     )
 })
 export default SavedTimes;

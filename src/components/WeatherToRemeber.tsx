@@ -16,8 +16,14 @@ function createData(
 
 let rows: any = [];
 
-function WeatherToRemember(props: any) {
-    if (props.main !== null) {
+
+type cityWeatherToRememberProp = {
+    weatherInfo: WeatherInfo,
+    city: String,
+}
+
+function WeatherToRemember(props: cityWeatherToRememberProp) {
+    if (props.weatherInfo.main !== null) {
         rows = [
             createData('main', props.weatherInfo.main),
             createData('description',props.weatherInfo.description),
@@ -30,7 +36,14 @@ function WeatherToRemember(props: any) {
         <TableContainer>
             <Table size="small" aria-label="Weather table">
                 <TableBody>
-                    {rows.map((row: RowInterface) => (
+                    <TableRow
+                    >
+                        <TableCell colSpan={2} align="center" >
+                            {props.city}
+                        </TableCell>
+                    </TableRow>
+
+                        {rows.map((row: RowInterface) => (
                         <TableRow
                             key={row.name}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}
