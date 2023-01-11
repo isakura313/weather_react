@@ -48,6 +48,7 @@ const Home = observer(() => {
             setLoaderState(true)
             try {
                 const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${WeatherStateInfo.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
+                console.log(data);
                 setWeather(data);
             } catch (e) {
                 handleClickOpen()
@@ -85,7 +86,7 @@ const Home = observer(() => {
                     <DialogTitle>{"Error"}</DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
-                            We can't find city <Typography variant="h5" component="h2" align="center"> {WeatherStateInfo.city}</Typography> Try something else
+                            We can't find city <span> {WeatherStateInfo.city}</span> Try something else
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

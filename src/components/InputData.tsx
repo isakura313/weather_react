@@ -4,6 +4,7 @@ import WeatherStoreInfo from "../store/WeatherStateInfo";
 import Stack from '@mui/material/Stack';
 import WeatherStateInfo from "../store/WeatherStateInfo";
 import axios from "axios";
+import WeatherToRememberInfo from "../types/WeatherToRememberInfo";
 
 
 function InputData(props: any) {
@@ -25,7 +26,7 @@ function InputData(props: any) {
         if (props.mode === 'now') {
             getInfoNow()
         } else if (props.mode === 'savedWeather') {
-            savedCity()
+            await savedCity()
         } else if (props.mode === 'savedTimes') {
             await savedTimes()
         }
@@ -38,8 +39,9 @@ function InputData(props: any) {
         console.log(inputRef.current)
     }
 
-    function savedCity() {
+    async function savedCity() {
         WeatherStoreInfo.setWeatherToRemember(cityInfo)
+        await WeatherStoreInfo.getWeatherToRemember(cityInfo);
     }
 
      function savedTimes() {

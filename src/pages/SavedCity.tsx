@@ -6,29 +6,20 @@ import {observer} from "mobx-react-lite";
 import GridItem from "../components/GridItem";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import Clock from "../components/Clock";
+import weatherToRememberInfoWhole from "../types/weatherToRememberInfoWhole";
+import WeatherToRemeber from "../components/WeatherToRemeber";
 
-
-const SavedTimes = observer(()=>{
+const SavedTimes = observer(() => {
     const [loaderState, setLoaderState] = useState(false);
     const [weather, setWeather] = useState(null)
-
-    const getData = async () => {
-        if (WeatherStateInfo.city !== '') {
-            setLoaderState(true)
-            try {
-                const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${WeatherStateInfo.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
-                setWeather(data);
-            } catch (e) {
-                setWeather(null)
-            }
-            setLoaderState(false);
-
-        }
-
-    };
-    useEffect(() => {
-        getData()
-    }, [WeatherStateInfo.city])
+    const listWeather = WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((weather: weatherToRememberInfoWhole, index) => {
+        return (
+            <Grid item xs={4} md={4} key={index}>
+                <WeatherToRemeber weatherInfo={weather.weatherInfo}/>
+            </Grid>
+        )
+    })
     return (
         <Grid container direction="row" justifyContent="center" alignItems="center"
               columnSpacing={{xs: 1, sm: 2, md: 3}}
@@ -39,8 +30,9 @@ const SavedTimes = observer(()=>{
                 </GridItem>
             </Grid>
             <Grid xs={6} item>
+                {listWeather}
             </Grid>
-            {WeatherStateInfo.citiesWeatherToRemember}
+
         </Grid>
     )
 })

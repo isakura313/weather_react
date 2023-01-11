@@ -2,30 +2,21 @@ import {makeAutoObservable} from "mobx";
 import {makePersistable} from 'mobx-persist-store';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Key} from "react";
-
+import WeatherToRememberInfo from "../types/WeatherToRememberInfo";
+import WeatherToRememberInfoWhole from "../types/weatherToRememberInfoWhole";
+import axios from 'axios';
 
 interface cityTime {
     id: Number | Key,
     name: String,
     timezone: Number
 }
-interface weatherToRememberInfo{
-    id: Number| Key,
-    created: Number,
-    weatherInfo: WeatherToRemeberInfo,
-}
-
-interface WeatherToRemeberInfo {
-    main: String,
-    description: String,
-    temp: String,
-    feels_like: String;
-}
 
 class WeatherStoreInfo {
     city = '';
     citiesWeatherToRemember: string[] = []
-    citiesWeatherInfoToRemember: WeatherToRemeberInfo[] = []
+    citiesWeatherInfoToRemember: WeatherToRememberInfo[] = []
+    citiesWeatherInfoToRememberWhole: WeatherToRememberInfoWhole[] = []
     citiesTimesToRememeber: cityTime[] = []
     weather = ''
 
@@ -34,7 +25,7 @@ class WeatherStoreInfo {
         // @ts-ignore
         makePersistable(this, {
             name: 'weather',
-            properties: ['citiesWeatherToRemember', 'citiesTimesToRememeber'],
+            properties: ['citiesWeatherToRemember', 'citiesTimesToRememeber', 'citiesWeatherInfoToRememberWhole'],
             storage: window.localStorage
         })
     }
@@ -61,6 +52,21 @@ class WeatherStoreInfo {
 
     deleteTimesToRemember(name: String) {
         this.citiesTimesToRememeber = this.citiesTimesToRememeber.filter((cityItem:cityTime)=>cityItem.name != name)
+    }
+    async getWeatherToRemember(city:String){
+        const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
+        console.log(data)
+        this.citiesWeatherInfoToRememberWhole.push({
+            id: +new Date(),
+            created: +new Date(),
+            weatherInfo: {
+                main: data.weather[0].main,
+                description: data.weather[0].description,
+                temp: data.main.temp,
+                feels_like: data.weather.feels_like
+            }
+        })
+
     }
 }
 
