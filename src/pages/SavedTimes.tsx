@@ -10,7 +10,6 @@ import Clock from '../components/Clock'
 import GridItem from "../components/GridItem";
 
 
-
 const SavedTimes = observer(() => {
     const weatherCities = WeatherStateInfo.citiesTimesToRememeber.slice()
     const listClock = weatherCities.map((city: any) => {

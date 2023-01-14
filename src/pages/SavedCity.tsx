@@ -1,12 +1,9 @@
-import Typography from "@mui/material/Typography";
 import InputData from '../components/InputData'
 import Grid from "@mui/material/Grid";
 import WeatherStateInfo from "../store/WeatherStateInfo";
 import {observer} from "mobx-react-lite";
 import GridItem from "../components/GridItem";
-import axios from "axios";
 import {useEffect, useState} from "react";
-import Clock from "../components/Clock";
 import weatherToRememberInfoWhole from "../types/weatherToRememberInfoWhole";
 import WeatherToRemeber from "../components/WeatherToRemeber";
 
@@ -19,14 +16,15 @@ const SavedTimes = observer(() => {
         checkUpdated();
     }, []);
 
-    async function checkUpdated(){
-
-        // i don't wanna set more and more
-        WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((city)=>{
-            //  не допустить дублирования...
+    async function checkUpdated() {
+        WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((city) => {
+            if ((+new Date() - city.created) / 2160000 > 1) {
+                WeatherStateInfo.updateGetWeatherToRemember(city);
+            }
 
         })
     }
+
     const listWeather = WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((weather: weatherToRememberInfoWhole, index) => {
         return (
             <Grid item xs={4} md={4} key={index}>

@@ -26,24 +26,23 @@ function WeatherToRemember(props: cityWeatherToRememberProp) {
     if (props.weatherInfo.main !== null) {
         rows = [
             createData('main', props.weatherInfo.main),
-            createData('description',props.weatherInfo.description),
+            createData('description', props.weatherInfo.description),
             createData('temp', props.weatherInfo.temp),
+            createData('feels like', props.weatherInfo.feels_like)
 
         ]
     }
-    console.log(rows)
+    // console.log(rows)
     return (
         <TableContainer>
             <Table size="small" aria-label="Weather table">
                 <TableBody>
-                    <TableRow
-                    >
-                        <TableCell colSpan={2} align="center" >
+                    <TableRow>
+                        <TableCell colSpan={2} align="center">
                             {props.city}
                         </TableCell>
                     </TableRow>
-
-                        {rows.map((row: RowInterface) => (
+                    {rows.map((row: RowInterface) => (
                         <TableRow
                             key={row.name}
                             sx={{'&:last-child td, &:last-child th': {border: 0}}}

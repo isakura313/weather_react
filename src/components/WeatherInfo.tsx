@@ -1,15 +1,14 @@
-import {useState, Key} from 'react'
+import {Key, useState} from 'react'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import {styled} from '@mui/material/styles';
 import Loader from "./Loader";
 import Typography from '@mui/material/Typography';
 import TimeInfo from "./TimeInfo";
 import WindInfo from "./WindInfo";
+import GridItem from '../components/GridItem'
 
 interface weatherType {
     main: String,
@@ -32,14 +31,6 @@ function createData(
     return {name, data};
 }
 
-
-const Item = styled(Paper)(({theme}) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-}));
 
 const WeatherInfo = (props: any) => {
 
@@ -71,7 +62,7 @@ const WeatherInfo = (props: any) => {
                     <Typography variant="h5" gutterBottom mt={2} align="center">
                         Weather in {props.city}
                     </Typography>
-                    <Item>
+                    <GridItem>
                         <TableContainer>
                             <Table size="small" aria-label="Weather table">
                                 <TableBody>
@@ -90,13 +81,13 @@ const WeatherInfo = (props: any) => {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                    </Item>
-                    <Item>
-                    <TimeInfo weatherInfo={props.weatherData}/>
-                    </Item>
-                    <Item>
-                    <WindInfo wind={props.weatherData.wind}/>
-                    </Item>
+                    </GridItem>
+                    <GridItem>
+                        <WindInfo windInfo={props.weatherData.wind}/>
+                    </GridItem>
+                    <GridItem>
+                        <TimeInfo weatherInfo={props.weatherData}/>
+                    </GridItem>
                 </div>
             }
         </div>

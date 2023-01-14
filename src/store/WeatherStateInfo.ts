@@ -51,11 +51,11 @@ class WeatherStoreInfo {
     }
 
     deleteTimesToRemember(name: String) {
-        this.citiesTimesToRememeber = this.citiesTimesToRememeber.filter((cityItem:cityTime)=>cityItem.name != name)
+        this.citiesTimesToRememeber = this.citiesTimesToRememeber.filter((cityItem: cityTime) => cityItem.name != name)
     }
-    async getWeatherToRemember(city:String){
+
+    async getWeatherToRemember(city: String) {
         const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
-        console.log(data)
         this.citiesWeatherInfoToRememberWhole.push({
             id: +new Date(),
             created: +new Date(),
@@ -64,10 +64,55 @@ class WeatherStoreInfo {
                 main: data.weather[0].main,
                 description: data.weather[0].description,
                 temp: data.main.temp,
-                feels_like: data.weather.feels_like
+                feels_like: data.main.feels_like
             }
         })
     }
+
+    async updateGetWeatherToRemember(city:any) {
+        const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
+        this.citiesWeatherInfoToRememberWhole = this.citiesWeatherInfoToRememberWhole.map((city) => {
+             if(city.city === city.city){
+                 city = {
+                     id: +new Date(),
+                     created:Number(new Date()),
+                     city: city.city,
+                     weatherInfo: {
+                         main: data.weather[0].main,
+                         description: data.weather[0].description,
+                         temp: data.main.temp,
+                         feels_like: data.main.feels_like
+                     }
+                 }
+             }
+             return city;
+        })
+        // updatedCity[0]
+        // console.log(updatedCity);
+        // const new_Weather
+        // @ts-ignore
+        // Object.assign(updatedCity, new_Weather)
+        // updatedCity = new_Weather
+    }
+
+    // this.citiesWeatherInfoToRememberWhole.map((city, i)=>{
+    //     // @ts-ignore
+    //
+    //     if (this.citiesWeatherInfoToRememberWhole[i].city === city) {
+    //         alert(this.citiesWeatherInfoToRememberWhole[i].city);
+    //
+    //         // alert(this.citiesWeatherInfoToRememberWhole[i].city)
+    //         this.citiesWeatherInfoToRememberWhole[i].created = +new Date();
+    //         console.log(+new Date());
+    //         this.citiesWeatherInfoToRememberWhole[i].weatherInfo = {
+    //             main: data.weather[0].main,
+    //             description: data.weather[0].description,
+    //             temp: data.main.temp,
+    //             feels_like: data.main.feels_like
+    //         }
+    //         // alert(data.weather[0].main)
+    //     }
+    // })
 }
 
 export default new WeatherStoreInfo()
