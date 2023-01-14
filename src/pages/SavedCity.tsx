@@ -16,15 +16,19 @@ const SavedTimes = observer(() => {
         checkUpdated();
     }, []);
 
-    async function checkUpdated() {
-        WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((city) => {
-            if ((+new Date() - city.created) / 2160000 > 1) {
+    async function checkUpdated(){
+        WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((city)=>{
+            // alert((Number(+new Date() - city.created)/36000))
+            // console.log(Number(+new Date() - city.created) /36000)
+            // alert((Number(+new Date() - city.created)/360000))
+
+            if((+new Date() - city.created) /3600000 >1){
+                // alert((Number(+new Date() - city.created)/36000))
                 WeatherStateInfo.updateGetWeatherToRemember(city);
             }
 
         })
     }
-
     const listWeather = WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((weather: weatherToRememberInfoWhole, index) => {
         return (
             <Grid item xs={4} md={4} key={index}>
