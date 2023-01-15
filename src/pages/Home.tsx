@@ -64,8 +64,8 @@ const Home = observer(() => {
     }, [WeatherStateInfo.city])
 
     return (
-        <div>
-            <Grid container direction="row" justifyContent="center" alignItems="center"
+        // <div>
+            <Grid  justifyContent="center" alignItems="center"
                   columnSpacing={{xs: 1, sm: 2, md: 3}}
                   rowSpacing={2}>
                 <Grid item xs={12}>
@@ -95,7 +95,7 @@ const Home = observer(() => {
                 </Dialog>
             </Grid>
 
-        </div>
+        // </div>
     )
 })
 

@@ -24,6 +24,7 @@ const SavedTimes = observer(() => {
 
             if((+new Date() - city.created) /3600000 >1){
                 // alert((Number(+new Date() - city.created)/36000))
+                // alert(city.city)
                 WeatherStateInfo.updateGetWeatherToRemember(city);
             }
 
@@ -31,7 +32,7 @@ const SavedTimes = observer(() => {
     }
     const listWeather = WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((weather: weatherToRememberInfoWhole, index) => {
         return (
-            <Grid item xs={4} md={4} key={index}>
+            <Grid item sm={4} xs={4} md={4} key={index}>
                 <WeatherToRemeber weatherInfo={weather.weatherInfo} city={weather.city}/>
             </Grid>
         )
