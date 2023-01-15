@@ -18,13 +18,7 @@ const SavedTimes = observer(() => {
 
     async function checkUpdated(){
         WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((city)=>{
-            // alert((Number(+new Date() - city.created)/36000))
-            // console.log(Number(+new Date() - city.created) /36000)
-            // alert((Number(+new Date() - city.created)/360000))
-
             if((+new Date() - city.created) /3600000 >1){
-                // alert((Number(+new Date() - city.created)/36000))
-                // alert(city.city)
                 WeatherStateInfo.updateGetWeatherToRemember(city);
             }
 
