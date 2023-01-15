@@ -3,7 +3,6 @@ import {useRouteError} from 'react-router-dom'
 
 function ErrorPage(){
     const error:any = useRouteError()
-    console.log(error)
 
     return(
         <div id="error-page">

@@ -69,10 +69,10 @@ class WeatherStoreInfo {
         })
     }
 
-    async updateGetWeatherToRemember(city:any) {
+    async updateGetWeatherToRemember(city:WeatherToRememberInfoWhole) {
         const {data} = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city.city}&units=metric&appid=${import.meta.env.VITE_REACT_KEY}`);
-        this.citiesWeatherInfoToRememberWhole = this.citiesWeatherInfoToRememberWhole.map((city) => {
-             if(city.city === city.city){
+        this.citiesWeatherInfoToRememberWhole = this.citiesWeatherInfoToRememberWhole.map((el) => {
+             if(el.city === city.city){
                  city = {
                      id: +new Date(),
                      created:Number(new Date()),
@@ -84,35 +84,11 @@ class WeatherStoreInfo {
                          feels_like: data.main.feels_like
                      }
                  }
+                 return city;
              }
-             return city;
+             return el;
         })
-        // updatedCity[0]
-        // console.log(updatedCity);
-        // const new_Weather
-        // @ts-ignore
-        // Object.assign(updatedCity, new_Weather)
-        // updatedCity = new_Weather
     }
-
-    // this.citiesWeatherInfoToRememberWhole.map((city, i)=>{
-    //     // @ts-ignore
-    //
-    //     if (this.citiesWeatherInfoToRememberWhole[i].city === city) {
-    //         alert(this.citiesWeatherInfoToRememberWhole[i].city);
-    //
-    //         // alert(this.citiesWeatherInfoToRememberWhole[i].city)
-    //         this.citiesWeatherInfoToRememberWhole[i].created = +new Date();
-    //         console.log(+new Date());
-    //         this.citiesWeatherInfoToRememberWhole[i].weatherInfo = {
-    //             main: data.weather[0].main,
-    //             description: data.weather[0].description,
-    //             temp: data.main.temp,
-    //             feels_like: data.main.feels_like
-    //         }
-    //         // alert(data.weather[0].main)
-    //     }
-    // })
 }
 
 export default new WeatherStoreInfo()

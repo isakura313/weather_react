@@ -14,6 +14,7 @@ const SavedTimes = observer(() => {
 
     useEffect(() => {
         checkUpdated();
+        // alert('call')
     }, []);
 
     async function checkUpdated(){
