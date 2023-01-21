@@ -27,7 +27,7 @@ const SavedTimes = observer(() => {
     }
     const listWeather = WeatherStateInfo.citiesWeatherInfoToRememberWhole.map((weather: weatherToRememberInfoWhole, index) => {
         return (
-            <Grid item sm={4} xs={4} md={4} key={index}>
+            <Grid item sm={4} xs={12} md={4} key={index}>
                 <WeatherToRemeber weatherInfo={weather.weatherInfo} city={weather.city}/>
             </Grid>
         )

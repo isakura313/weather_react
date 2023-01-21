@@ -6,6 +6,10 @@ import IconButton from '@mui/material/IconButton';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import reformatZero from "../../helpers/reformatZero";
 import GridItem from "../GridItem";
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+
+
 
 type propsClock = {
     city: String,
@@ -26,10 +30,6 @@ const ITEM_HEIGHT = 48;
 function Clock(props: propsClock) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [date, updateDate] = useState(DateTime.now());
-
-
-
-
     function refreshClock() {
         updateDate(DateTime.now())
     }
@@ -42,12 +42,20 @@ function Clock(props: propsClock) {
     }, [])
 
     const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
     const handleClose = () => {
         setAnchorEl(null);
     };
+    function handleCloseMenu(){
+
+        setAnchorEl(null);
+        WeatherStoreInfo.deleteTimesToRemember(props.city)
+    }
+    const options = [
+        'Delete',
+    ];
+    function handleClick(event: React.MouseEvent<HTMLElement>){
+        setAnchorEl(event.currentTarget);
+    }
 
     return (
         <GridItem>
@@ -62,10 +70,31 @@ function Clock(props: propsClock) {
                 aria-controls={open ? 'long-menu' : undefined}
                 aria-expanded={open ? 'true' : undefined}
                 aria-haspopup="true"
-                onClick={() => WeatherStoreInfo.deleteTimesToRemember(props.city)}
+                onClick={handleClick}
             >
                 <MoreVertIcon />
             </IconButton>
+            <Menu
+                id="long-menu"
+                MenuListProps={{
+                    'aria-labelledby': 'long-button',
+                }}
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                    style: {
+                        maxHeight: ITEM_HEIGHT * 4.5,
+                        width: '20ch',
+                    },
+                }}
+            >
+                {options.map((option) => (
+                    <MenuItem key={option} selected={option === 'Delete'} onClick={handleCloseMenu}>
+                        {option}
+                    </MenuItem>
+                ))}
+            </Menu>
         </GridItem>
     )
 }

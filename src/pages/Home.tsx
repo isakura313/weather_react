@@ -64,17 +64,14 @@ const Home = observer(() => {
     }, [WeatherStateInfo.city])
 
     return (
-        // <div>
-            <Grid  justifyContent="center" alignItems="center"
-                  columnSpacing={{xs: 1, sm: 2, md: 3}}
+        <div>
+            <Grid justifyContent="center" alignItems="center"
+                  columnSpacing={{xs: 1}}
                   rowSpacing={2}>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={12}>
                     <GridItem>
                         <InputData mode="now"/>
                     </GridItem>
-                </Grid>
-                <Grid xs={6} item>
-                    <WeatherInfo weatherData={weather} city={WeatherStateInfo.city} loaderState={loaderState}/>
                 </Grid>
                 <Dialog
                     open={open}
@@ -94,8 +91,9 @@ const Home = observer(() => {
                     </DialogActions>
                 </Dialog>
             </Grid>
+            <WeatherInfo weatherData={weather} city={WeatherStateInfo.city} loaderState={loaderState}/>
+        </div>
 
-        // </div>
     )
 })
 

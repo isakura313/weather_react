@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import TimeInfo from "./TimeInfo";
 import WindInfo from "./WindInfo";
 import GridItem from '../components/GridItem'
+import Grid from '@mui/material/Grid';
 
 interface weatherType {
     main: String,
@@ -33,9 +34,7 @@ function createData(
 
 
 const WeatherInfo = (props: any) => {
-
-    const [weatherInfo, updateWeatherInfo] = useState<weatherType | null>(null)
-    let rows: any = [];
+    let rows: any[] = [];
     if (props.weatherData !== null) {
         rows = [
             createData('main', props.weatherData.weather[0].main),
@@ -47,7 +46,7 @@ const WeatherInfo = (props: any) => {
         ]
     }
     return (
-        <div>
+        <Grid container spacing={2} justifyContent={'center'}>
             {props.loaderState &&
                 <Loader/>
             }
@@ -58,7 +57,7 @@ const WeatherInfo = (props: any) => {
             }
 
             {props.weatherData !== null && props.loaderState === false &&
-                <div>
+                <Grid xs={12} xl={8} lg={8} item>
                     <Typography variant="h5" gutterBottom mt={2} align="center">
                         Weather in {props.city}
                     </Typography>
@@ -88,9 +87,9 @@ const WeatherInfo = (props: any) => {
                     <GridItem>
                         <TimeInfo weatherInfo={props.weatherData}/>
                     </GridItem>
-                </div>
+                </Grid>
             }
-        </div>
+        </Grid>
     )
 
 
